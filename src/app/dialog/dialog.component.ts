@@ -17,6 +17,7 @@ export class DialogComponent implements OnInit {
     private fb: FormBuilder,
     private apiService: ApiService,
     private dialogRef: MatDialogRef<DialogComponent>,
+    //To access the data in your dialog component, you have to use the MAT_DIALOG_DATA injection token:
     @Inject(MAT_DIALOG_DATA) public editData: any
   ) {}
 
@@ -29,6 +30,7 @@ export class DialogComponent implements OnInit {
       comment: ['', Validators.required],
       date: ['', Validators.required],
     });
+    console.log('edit-data', this.editData);
     if (this.editData) {
       this.actionBtn = 'Update';
       this.productForm.controls['productName'].setValue(
@@ -48,6 +50,7 @@ export class DialogComponent implements OnInit {
           next: (res) => {
             alert('Product added successfully');
             this.productForm.reset();
+            //When closing, an optional result value can be provided. This result value is forwarded as the result of the afterClosed Observable. "save"
             this.dialogRef.close('save');
           },
           error: () => {
